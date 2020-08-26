@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./site.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - mi-network
+  php:
+    build:
+      context: .
+      dockerfile: ./docker-file/Dockerfile
+    #volumes:
+     # - ./src:/var/www/html
+    #command: "composer install"
+    networks:
+      - mi-network
+networks:
+  mi-network:
+    driver: bridge
+#http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm/
+#composer run command
+#docker-compose up --build --force-recreate -d
